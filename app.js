@@ -87,7 +87,7 @@ async function loadPhoto(file){
  if(!/^image\/(jpeg|png|webp)$/.test(file.type)){ $('status').textContent='請選擇 JPG、PNG 或 WebP 圖片；HEIC／RAW 請先轉換格式。';return;}
  if(file.size>50*1024*1024){$('status').textContent='這張照片超過 50 MB，請先縮小檔案後再試。';return;}
  const url=URL.createObjectURL(file);$('status').textContent='正在裝入你的照片…';
- try{const img=new Image();img.src=url;await img.decode();if(version!==loadVersion)return;if(img.naturalWidth*img.naturalHeight>60000000)throw new Error('照片超過 6,000 萬像素，請縮小後再試。');source=img;document.querySelector('.preview-live').classList.add('is-active');resetFraming();sourceName=file.name.replace(/\.[^.]+$/,'');$('empty-hint').hidden=true;makePreview();updateDimensions();$('status').textContent='照片已載入。選擇底片、微調色彩，按頂部快門下載。';}catch(error){if(version===loadVersion)$('status').textContent=error.message.startsWith('照片超過')?error.message:'無法讀取這張照片，請確認檔案完整或換一張試試。';}finally{URL.revokeObjectURL(url);}
+ try{const img=new Image();img.src=url;await img.decode();if(version!==loadVersion)return;if(img.naturalWidth*img.naturalHeight>60000000)throw new Error('照片超過 6,000 萬像素，請縮小後再試。');source=img;document.querySelector('.preview-live').classList.add('is-active');resetFraming();sourceName=file.name.replace(/\.[^.]+$/,'');$('empty-hint').hidden=true;makePreview();updateDimensions();$('status').textContent='照片已載入。選擇底片、微調色彩，按底片倉旁的銀色快門下載。';}catch(error){if(version===loadVersion)$('status').textContent=error.message.startsWith('照片超過')?error.message:'無法讀取這張照片，請確認檔案完整或換一張試試。';}finally{URL.revokeObjectURL(url);}
 }
 const drop=$('dropzone');['dragenter','dragover'].forEach(event=>drop.addEventListener(event,e=>{e.preventDefault();drop.classList.add('dragging');}));['dragleave','drop'].forEach(event=>drop.addEventListener(event,e=>{e.preventDefault();drop.classList.remove('dragging');}));drop.addEventListener('drop',e=>{if(e.dataTransfer.files[0])loadPhoto(e.dataTransfer.files[0]);});window.addEventListener('dragover',e=>e.preventDefault());window.addEventListener('drop',e=>e.preventDefault());
 $('grid').onclick=()=>{const shown=$('grid-overlay').hidden;$('grid-overlay').hidden=!shown;$('grid').setAttribute('aria-pressed',shown);};
@@ -95,7 +95,7 @@ function compare(value){if(comparing!==value){comparing=value;render();}}
 $('compare').addEventListener('pointerdown',e=>{$('compare').setPointerCapture(e.pointerId);compare(true);});['pointerup','pointercancel','lostpointercapture','blur'].forEach(event=>$('compare').addEventListener(event,()=>compare(false)));$('compare').addEventListener('keydown',e=>{if(e.code==='Space'||e.code==='Enter'){e.preventDefault();compare(true);}});$('compare').addEventListener('keyup',()=>compare(false));window.addEventListener('blur',()=>compare(false));
 $('reset').onclick=()=>{resetFraming();setRatio(Geo.RATIOS[0].id);$('tint').value=0;$('warmth').value=0;$('exposure').value=0;updateOutputs();selectFilm(0);$('status').textContent='已恢復 Classic Neg、3:2 輸出與預設調整值。';};
 async function downloadPhoto(){
- if(!source||exporting)return;exporting=true;$('top-shutter').disabled=true;$('top-shutter').setAttribute('aria-busy','true');$('status').textContent='正在裝置內顯影，請稍候…';
+ if(!source||exporting)return;exporting=true;$('shutter').disabled=true;$('shutter').setAttribute('aria-busy','true');$('status').textContent='正在裝置內顯影，請稍候…';
  try{
   const exportSource=source, exportName=sourceName, exportFilm=films[selected].name, exportRatio=outputRatio;
   const exportFrame={zoom,centerX,centerY};
@@ -108,10 +108,9 @@ async function downloadPhoto(){
   const context=out.getContext('2d');context.imageSmoothingEnabled=true;context.imageSmoothingQuality='high';
   context.drawImage(exportSource,geo.crop.x,geo.crop.y,geo.crop.width,geo.crop.height,0,0,out.width,out.height);
   const pixels=context.getImageData(0,0,out.width,out.height);EZFilm.process(pixels.data,out.width,out.height,contextForExport,photoRegion(geo.crop,exportSource.naturalWidth,exportSource.naturalHeight));context.putImageData(pixels,0,0);
-  const blob=await new Promise(resolve=>out.toBlob(resolve,'image/png'));if(!blob)throw new Error('Export failed');const url=URL.createObjectURL(blob),link=document.createElement('a');link.href=url;link.download=`${exportName}-EZ-${exportFilm.replace(/ /g,'-')}-${exportRatio.id.replace(':','x')}.png`;link.click();setTimeout(()=>URL.revokeObjectURL(url),60000);$('status').textContent=`已下載 ${out.width} × ${out.height} PNG 照片（${exportRatio.id}）${capped?'，長邊縮至 4096 px':''}。照片沒有離開你的裝置。`;out.width=out.height=0;}catch{$('status').textContent='下載失敗，可能是裝置記憶體不足；請縮小照片後再試。';}finally{exporting=false;$('top-shutter').disabled=false;$('top-shutter').removeAttribute('aria-busy');}
+  const blob=await new Promise(resolve=>out.toBlob(resolve,'image/png'));if(!blob)throw new Error('Export failed');const url=URL.createObjectURL(blob),link=document.createElement('a');link.href=url;link.download=`${exportName}-EZ-${exportFilm.replace(/ /g,'-')}-${exportRatio.id.replace(':','x')}.png`;link.click();setTimeout(()=>URL.revokeObjectURL(url),60000);$('status').textContent=`已下載 ${out.width} × ${out.height} PNG 照片（${exportRatio.id}）${capped?'，長邊縮至 4096 px':''}。照片沒有離開你的裝置。`;out.width=out.height=0;}catch{$('status').textContent='下載失敗，可能是裝置記憶體不足；請縮小照片後再試。';}finally{exporting=false;$('shutter').disabled=false;$('shutter').removeAttribute('aria-busy');}
 };
 setRatio(Geo.RATIOS[0].id);makePreview();selectFilm(0);
 
-$('top-dial').onclick=()=>$('zoom').focus();
 syncZoom();
-$('top-shutter').onclick=()=>source ? downloadPhoto() : $('file').click();
+$('shutter').onclick=()=>source ? downloadPhoto() : $('file').click();

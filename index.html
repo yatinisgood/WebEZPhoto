@@ -5,19 +5,19 @@
 
 <main><div class="intro"><div><p class="eyebrow">A LITTLE GRAIN. A LOT OF FEELING.</p><h1>讓日常，<em>顯影。</em></h1></div><p>選一卷底片，留下你的色彩。<br>純粹的照片體驗，從這裡開始。</p></div>
 <section class="camera" aria-label="照片編輯器">
-<div class="top-hardware">
-<button id="top-dial" class="top-dial" aria-label="調整縮放，前往縮放滑桿" title="前往縮放滑桿"><span class="dial-rim"></span><span class="dial-scale">− · 0 · ＋</span></button>
-<button id="top-shutter" class="top-shutter" aria-label="快門：下載照片，未載入時選擇照片" title="按下快門下載照片"><span class="shutter-cap"></span><span class="shutter-base"></span></button>
+<div class="top-hardware" aria-hidden="true">
+<div class="top-dial"><span class="dial-rim"></span><span class="dial-scale">− · 0 · ＋</span></div>
+<div class="top-shutter"><span class="shutter-cap"></span><span class="shutter-base"></span></div>
 </div>
-<div class="camera-top"><div class="model">EZ<span>35</span><small>FILM SIMULATOR</small></div><div class="top-tools"><select id="ratio" aria-label="輸出比例" title="選擇下載照片的長寬比"></select><button id="compare" title="按住比較原圖">◧ <span>按住看原圖</span></button><button id="grid" aria-pressed="false">▦ <span>格線</span></button><button id="reset">↺ <span>重設</span></button></div><span class="live"><i></i> LOCAL LAB</span></div>
+<div class="camera-top"><div class="model">EZ<span>35</span><small>FILM SIMULATOR</small></div><div class="top-tools"><select id="ratio" aria-label="輸出比例" title="選擇下載照片的長寬比"></select><button id="compare" title="按住比較原圖">◧ <span>按住看原圖</span></button><button id="grid" aria-pressed="false">▦ <span>格線</span></button><button id="reset">↺ <span>重設</span></button></div></div>
 <div class="camera-body"><div class="screen-frame"><div id="dropzone" class="viewfinder"><canvas id="preview" tabindex="0" aria-label="照片濾鏡預覽；放大後可拖曳或使用方向鍵移動，雙擊回到完整照片"></canvas><div class="screen-top"><span id="film-label">CLASSIC NEG · ISO 400</span></div><div id="crop-frame" class="crop-frame" aria-hidden="true"><div id="grid-overlay" class="grid-overlay" hidden></div></div><div class="focus" aria-hidden="true"></div><div class="empty-hint" id="empty-hint"><span>你的日常，值得一卷底片。</span><button id="choose-main">＋ 選擇照片</button><small>或將照片拖曳至此 · JPG / PNG / WebP</small></div><div class="photo-tuning" role="group" aria-label="照片調整">
 <label class="photo-slider zoom-slider"><span>ZOOM</span><input id="zoom" type="range" min="1" max="3" step="any" value="1" aria-label="照片縮放" title="連續縮放，放大後可拖曳照片取景"><output id="zoom-value" for="zoom">1.00×</output></label>
 <label class="photo-slider vertical-slider temperature-slider"><span>WB</span><input id="warmth" type="range" min="-100" max="100" value="0" aria-label="色溫" aria-orientation="vertical"><output id="warmth-value">0</output></label>
 <label class="photo-slider vertical-slider ev-slider"><span>EV</span><input id="exposure" type="range" min="-20" max="20" value="0" aria-label="曝光補償" aria-orientation="vertical"><output id="exposure-value">0.0 EV</output></label>
 <label class="photo-slider tint-slider"><span>TINT</span><span class="tint-endpoint" aria-hidden="true">G</span><input id="tint" type="range" min="-100" max="100" value="0" aria-label="TINT 色偏，負值偏綠，正值偏洋紅"><span class="tint-endpoint" aria-hidden="true">M</span><output id="tint-value">0</output></label>
 </div><div class="screen-bottom"><span id="dimensions">EZ PHOTO / 001</span><span class="preview-live"><i class="preview-live-dot" aria-hidden="true"></i><span id="preview-state">LIVE</span></span></div></div></div>
-<aside class="camera-controls"><button id="current-film" class="film-art" aria-label="選擇底片，現在使用 Classic Neg"></button><button id="choose" class="import-button"><svg class="album-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 6V4a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1h-2"/><rect x="2" y="6" width="16" height="16" rx="2"/><circle cx="7" cy="11" r="1.5"/><path d="m3 19 4-4 3 3 3-5 4 6"/></svg><span>更換照片</span></button></aside></div>
-<div class="camera-bottom"><span>35mm FILM EXPERIENCE</span><span>DESIGNED FOR YOUR EVERYDAY <b>✦</b></span></div>
+<aside class="camera-controls"><button id="current-film" class="film-art" aria-label="選擇底片，現在使用 Classic Neg"></button><div class="camera-actions"><div class="shutter-control"><button id="shutter" class="silver-shutter" aria-label="快門：下載照片，未載入時選擇照片" title="按下快門下載照片"><span aria-hidden="true"></span></button><span class="shutter-caption">快門下載</span></div><button id="choose" class="import-button"><svg class="album-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 6V4a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1h-2"/><rect x="2" y="6" width="16" height="16" rx="2"/><circle cx="7" cy="11" r="1.5"/><path d="m3 19 4-4 3 3 3-5 4 6"/></svg><span>更換照片</span></button></div></aside></div>
+<div class="camera-bottom"><span>DESIGNED FOR YOUR EVERYDAY <b>✦</b></span></div>
 </section>
 
 <p id="status" role="status" aria-live="polite"></p>

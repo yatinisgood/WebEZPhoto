@@ -38,11 +38,17 @@
     const warmth=clamp(options.warmth || 0,-1,1), tint=clamp(options.tint || 0,-1,1);
     const exposure=2**clamp(options.ev || 0,-2,2), tables=[];
     // Exposure is applied in linear light, before the film's highlight shoulder.
+    // TINT follows the reference captures (IMG_4003/4004, ±10 = full travel): the
+    // green↔magenta axis (G down, R up) plus a blue lift on the magenta side, with
+    // luma held constant. Mid-tones and shadows take the full shift; highlights
+    // roll back toward untouched so white keys stay white.
+    const tintLog=[.20,-.20,.28], tintLuma=tintLog[0]*.2126+tintLog[1]*.7152+tintLog[2]*.0722;
     for (let k=0;k<3;k++) {
-      const gain=exposure*Math.exp(warmth*[.19,.015,-.19][k]+tint*[.10,-.10,.10][k]);
+      const gain=exposure*Math.exp(warmth*[.19,.015,-.19][k]), tintGain=tint*(tintLog[k]-tintLuma);
       const table=new Float32Array(256);
       for (let i=0;i<256;i++) {
-        const v=i/255, linear=(v<=.04045?v/12.92:((v+.055)/1.055)**2.4)*gain;
+        const v=i/255, base=v<=.04045?v/12.92:((v+.055)/1.055)**2.4, s=clamp((base-.4)/.5), keep=1-s*s*(3-2*s)*.9;
+        const linear=base*gain*Math.exp(tintGain*keep);
         table[i]=linear<=.0031308?linear*12.92:1.055*linear**(1/2.4)-.055;
       }
       tables.push(table);

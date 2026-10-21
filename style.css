@@ -12,8 +12,8 @@
 .shutter-base{position:absolute;bottom:0;left:0;right:0;height:17px;border:1px solid #5b5f53;border-radius:40% 40% 2px 2px;background:linear-gradient(#74796c,#242720 45%,#11130f);box-shadow:inset 0 2px 1px #a4a79555}
 .shutter-cap{position:absolute;bottom:10px;left:18px;right:18px;height:23px;border:1px solid #a1a394;border-radius:45% 45% 25% 25%;background:linear-gradient(#c3c5b8 0%,#777c6f 18%,#282c24 33%,#898e80 55%,#292d25 80%);box-shadow:0 -2px 2px #070906,inset 0 1px 1px #f2f2df;transition:transform .1s}
 .shutter-cap:after{content:'';position:absolute;inset:1px 5px auto;height:8px;border-radius:50%;background:radial-gradient(ellipse,#42473c 45%,#989e8c 65%,#272b23 74%)}
-.top-shutter:active .shutter-cap{transform:translateY(4px)}
-.top-dial:active .dial-rim{filter:brightness(1.3)}
+
+
 @media(max-width:760px){.camera{margin-top:29px}.top-dial{left:23px;width:99px;height:34px}.dial-rim{left:12px;right:12px;height:23px}.dial-scale{font-size:8px;letter-spacing:5px}.top-shutter{right:22px;width:89px;height:32px}.shutter-cap{left:12px;right:12px;height:21px}}
 /* Brushed gunmetal shell, with a recessed leather-wrapped interior. */
 .camera{
@@ -225,3 +225,72 @@ main{
 /* A legible album symbol for importing another photo. */
 .import-button{display:inline-flex;align-items:center;justify-content:center;gap:8px}
 .import-button .album-icon{display:block;width:22px;height:22px;flex-shrink:0}
+
+/* Decorative top hardware; the working silver shutter sits beside the film. */
+.top-hardware{pointer-events:none}
+.shutter-control{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.silver-shutter{position:relative;display:grid;place-items:center;width:62px;height:62px;padding:0;border:3px solid #252a2d;border-radius:50%;background:linear-gradient(135deg,#fbfcfd 0%,#b8c0c6 27%,#f2f4f5 48%,#929da5 77%,#dce2e6 100%);box-shadow:0 0 0 2px #b9c1c6,0 0 0 5px #24292c,0 5px 9px #000b,inset 0 2px 2px #fff,inset 0 -3px 4px #46535d88;transition:transform .12s,box-shadow .12s}
+.silver-shutter>span{width:40px;height:40px;border:1px solid #727e8780;border-radius:50%;background:repeating-linear-gradient(0deg,#ffffff0a 0 1px,#66727a0a 1px 2px);box-shadow:inset 0 1px 1px #fff9,0 1px 1px #fff8}
+.silver-shutter:active:not(:disabled){transform:translateY(3px);box-shadow:0 0 0 2px #b9c1c6,0 0 0 5px #24292c,0 2px 4px #000b,inset 0 1px 3px #46535d88}
+.shutter-caption{font-size:10px;letter-spacing:1px;color:#c5cbd0;white-space:nowrap}
+@media(min-width:761px){
+  .camera-body{grid-template-columns:minmax(0,1fr) 210px}
+  .camera-controls{grid-template-columns:minmax(0,1fr) 68px;grid-template-rows:minmax(0,1fr) auto;column-gap:12px}
+  .camera-controls .film-art{width:130px;max-width:100%}
+  .camera-controls .import-button{grid-column:1/-1}
+}
+@media(max-width:760px){
+  .camera-controls{gap:10px}
+  .silver-shutter{width:54px;height:54px}
+  .silver-shutter>span{width:34px;height:34px}
+  .shutter-control{gap:10px}
+  .shutter-caption{font-size:9px}
+}
+@media(prefers-reduced-motion:reduce){.silver-shutter{transition:none}}
+
+/* Stack the shutter directly above the import button. */
+.camera-actions{display:flex;flex-direction:column;align-items:center;gap:22px}
+@media(min-width:761px){
+  .camera-body{grid-template-columns:minmax(0,1fr) 155px}
+  .camera-controls{grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(0,1fr) auto;gap:24px}
+  .camera-controls .film-art{width:155px;min-height:180px}
+  .camera-actions{padding-top:6px}
+}
+@media(max-width:760px){
+  .camera-controls{height:auto;min-height:150px;justify-content:space-evenly}
+  .camera-actions{gap:14px}
+  .camera-controls .film-art{width:90px;height:145px}
+}
+
+/* Recessed capsule-shaped film window, matching reference/tune.PNG. */
+.camera-controls .film-art{
+  position:relative;
+  width:112px;
+  height:100%;
+  min-height:180px;
+  max-height:300px;
+  align-self:center;
+  border:6px solid #101314;
+  border-radius:999px;
+  overflow:hidden;
+  background-color:#050707;
+  background-size:auto 100%;
+  background-position:center;
+  box-shadow:0 0 0 2px #51585b,0 0 0 5px #080a0b,0 0 0 7px #303638,3px 5px 9px #000b,inset 0 0 8px #000;
+}
+.camera-controls .film-art::after{
+  content:'';
+  position:absolute;
+  inset:0;
+  border-radius:inherit;
+  pointer-events:none;
+  background:linear-gradient(90deg,#0008,transparent 14%,#ffffff0a 30%,transparent 65%,#0006);
+  box-shadow:inset 0 2px 4px #ffffff25,inset 0 -3px 5px #0009;
+}
+@media(max-width:760px){
+  .camera-controls .film-art{width:70px;height:145px;min-height:0;border-width:4px;box-shadow:0 0 0 2px #51585b,0 0 0 4px #080a0b,0 0 0 5px #303638,2px 4px 6px #000b}
+}
+
+/* Keep the upper-right shell and lower-left viewfinder/shell free of labels. */
+#dimensions{display:none}
+.screen-bottom,.camera-bottom{justify-content:flex-end}
