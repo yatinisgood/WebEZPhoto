@@ -221,3 +221,7 @@ main{
 
 /* Show the live indicator only after a photo has loaded successfully. */
 .preview-live:not(.is-active){display:none}
+
+/* A legible album symbol for importing another photo. */
+.import-button{display:inline-flex;align-items:center;justify-content:center;gap:8px}
+.import-button .album-icon{display:block;width:22px;height:22px;flex-shrink:0}
