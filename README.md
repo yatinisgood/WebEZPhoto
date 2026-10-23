@@ -1,6 +1,6 @@
 # EZ Photo
 
-復古相機介面的靜態照片濾鏡工具，以 `reference/layout.PNG` 為版型參考、`assets/P1.png`～`assets/P5.png` 為五款底片選擇素材。
+復古相機介面的靜態照片濾鏡工具，以 `reference/layout.PNG` 為版型參考、`assets/P1_small.png`～`assets/P5_small.png` 為五款底片選擇素材。
 
 ## 使用
 

@@ -1,11 +1,11 @@
 'use strict';
 const $ = id => document.getElementById(id);
 const films = [
-  {name:'Classic Neg',recipe:'classic',art:'assets/P5.png',iso:400},
-  {name:'Evergreen',recipe:'evergreen',art:'assets/P4.png',iso:100},
-  {name:'Nocturne',recipe:'nocturne',art:'assets/P2.png',iso:800},
-  {name:'Solara',recipe:'solara',art:'assets/P1.png',iso:200},
-  {name:'800 Cine',recipe:'cine',art:'assets/P3.png',iso:800}
+  {name:'Classic Neg',recipe:'classic',art:'assets/P5_small.png',iso:400},
+  {name:'Evergreen',recipe:'evergreen',art:'assets/P4_small.png',iso:100},
+  {name:'Nocturne',recipe:'nocturne',art:'assets/P2_small.png',iso:800},
+  {name:'Solara',recipe:'solara',art:'assets/P1_small.png',iso:200},
+  {name:'800 Cine',recipe:'cine',art:'assets/P3_small.png',iso:800}
 ];
 let selected = 0, source = null, sourceName = 'photo', comparing = false, frame = 0, loadVersion = 0, exporting = false;
 let zoom = 1, centerX = .5, centerY = .5, pan = null;
